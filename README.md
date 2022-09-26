@@ -2,9 +2,17 @@
 
 ## animal-shelter-api
 
-REST api. 
+### REST api module
 
-Could be run from `adopt-a-tapir` directory by : `sbt animal-shelter-api/run` and tested with the example curl:
+build new image: 
+
+`sbt docker`
+
+image can be run locally via: 
+
+`java -jar animal-shelter-api/target/scala-2.13/animal-shelter-api.jar`
+
+application can be tested with HTTP request:
 
 `curl --location --request POST 'localhost:8080/animal-shelter/animal' \
 --header 'Content-Type: text/plain' \

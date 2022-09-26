@@ -17,6 +17,19 @@ lazy val `animal-shelter-api` = project
         dependencies.circe ++
         dependencies.quill ++
         dependencies.others
+  ).enablePlugins(DockerPlugin)
+  .settings(
+    assembly / assemblyJarName := "animal-shelter-api.jar",
+    docker := (docker dependsOn assembly).value,
+    docker / dockerfile := {
+      val artifact = assembly.value
+      val artifactTargetPath = s"/app/${artifact.name}"
+      new Dockerfile {
+        from("openjdk:8-jre")
+        add(artifact, artifactTargetPath)
+        entryPoint("java", "-jar", artifactTargetPath)
+      }
+    }
   )
 
 addCommandAlias("fmt", "scalafmtSbt; scalafmtAll")
