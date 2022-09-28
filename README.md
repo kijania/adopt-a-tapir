@@ -21,3 +21,7 @@ application can be tested with HTTP request:
 "animalSize": "small",
 "adoptionStatus": "in-quarantine"
 }'`
+
+documentation in Swagger is available on:
+
+`http://localhost:8080/docs/`
