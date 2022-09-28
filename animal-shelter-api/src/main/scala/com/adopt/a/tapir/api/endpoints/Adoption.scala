@@ -15,6 +15,6 @@ object Adoption extends SchemaDerivation {
       .post
       .summary("Register new tapir in the animal shelter")
       .name("add tapir")
-      .in(jsonBody[TapirAnimal])
+      .in(TapirAnimal.asRequest)
       .out(statusCode(StatusCode.Created))
 }
