@@ -4,10 +4,9 @@ import com.adopt.a.tapir.api.model.TapirAnimal
 import sttp.model.StatusCode
 import sttp.tapir.PublicEndpoint
 import sttp.tapir.generic.auto.SchemaDerivation
-import sttp.tapir.json.circe.jsonBody
 import sttp.tapir.ztapir._
 
-object Adoption extends SchemaDerivation {
+object AnimalRegistry extends SchemaDerivation {
 
   val route: PublicEndpoint[TapirAnimal, Unit, Unit, Any] =
     endpoint
