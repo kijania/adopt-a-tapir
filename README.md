@@ -18,7 +18,7 @@ application can be tested with HTTP request:
 --header 'Content-Type: text/plain' \
 --data-raw '{
 "name" : "Jazzy",
-"animalSize": "small",
+"size": "small",
 "adoptionStatus": "in-quarantine"
 }'`
 

@@ -1,7 +1,8 @@
 package com.adopt.a.tapir.api.routes
 
-import com.adopt.a.tapir.api.AnimalShelterService
+import com.adopt.a.tapir.api.model.{ErrorInfo, TapirAnimalResponse}
 import com.adopt.a.tapir.api.endpoints.AnimalRegistry.route
+import com.adopt.a.tapir.domain.AnimalShelterService
 import org.http4s.HttpRoutes
 import sttp.tapir.server.http4s.ztapir.ZHttp4sServerInterpreter
 import sttp.tapir.swagger.bundle.SwaggerInterpreter
@@ -14,7 +15,14 @@ object AnimalRegistry {
 
   def routes: HttpRoutes[Effect] =
     ZHttp4sServerInterpreter()
-      .from(route.zServerLogic(AnimalShelterService.register))
+      .from(
+        route.zServerLogic(request =>
+          AnimalShelterService
+            .register(request.toDomain)
+            .map(TapirAnimalResponse.fromDomain)
+            .mapError(throwable => ErrorInfo(throwable.getMessage))
+        )
+      )
       .toRoutes
 
   def swaggerRoutes: HttpRoutes[Effect] =

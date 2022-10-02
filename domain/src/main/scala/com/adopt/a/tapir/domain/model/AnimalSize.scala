@@ -1,13 +1,13 @@
-package com.adopt.a.tapir.api.model
+package com.adopt.a.tapir.domain.model
 
-import enumeratum.{CirceEnum, Enum, EnumEntry, QuillEnum}
 import enumeratum.EnumEntry.Lowercase
+import enumeratum._
 import sttp.tapir.Schema
 
 sealed trait AnimalSize extends EnumEntry
 
 object AnimalSize extends Enum[AnimalSize] with QuillEnum[AnimalSize] with CirceEnum[AnimalSize] {
-  val values: IndexedSeq[AnimalSize] = findValues
+  val values: IndexedSeq[AnimalSize]      = findValues
   implicit val schema: Schema[AnimalSize] = Schema.derived
 
   case object Small  extends AnimalSize with Lowercase

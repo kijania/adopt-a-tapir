@@ -1,13 +1,13 @@
-package com.adopt.a.tapir.api.model
+package com.adopt.a.tapir.domain.model
 
 import enumeratum.EnumEntry.Hyphencase
-import enumeratum.{CirceEnum, Enum, EnumEntry, QuillEnum}
+import enumeratum._
 import sttp.tapir.Schema
 
 sealed trait AdoptionStatus extends EnumEntry
 
 object AdoptionStatus extends Enum[AdoptionStatus] with QuillEnum[AdoptionStatus] with CirceEnum[AdoptionStatus] {
-  val values: IndexedSeq[AdoptionStatus] = findValues
+  val values: IndexedSeq[AdoptionStatus]      = findValues
   implicit val schema: Schema[AdoptionStatus] = Schema.derived
 
   case object InQuarantine           extends AdoptionStatus with Hyphencase
