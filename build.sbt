@@ -11,6 +11,7 @@ lazy val `animal-shelter-api` = project
   .dependsOn(`domain`)
   .dependsOn(`postgres-persistence`)
   .settings(
+    resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/",
     name := "animal-shelter-api",
     libraryDependencies ++=
       dependencies.zio ++
@@ -18,7 +19,7 @@ lazy val `animal-shelter-api` = project
         dependencies.test ++
         dependencies.http4s ++
         dependencies.tapir ++
-        dependencies.others
+        dependencies.config
   )
   .enablePlugins(DockerPlugin)
   .settings(
