@@ -1,27 +1,28 @@
 # adopt-a-tapir
 
-## animal-shelter-api
+### Run the start script
 
-### REST api module
+1. Run: `./start.sh`
 
-build new image: 
+* it would compile application
+* build application image
+* run postgresql in your local docker
+* run application
 
-`sbt docker`
+2. Create schema manually (until there is no automated data migration) in database
 
-image can be run locally via: 
+* `psql -h localhost -p 25432 -U postgres -d postgres`
 
-`java -jar animal-shelter-api/target/scala-2.13/animal-shelter-api.jar`
+* with password: `mysecretpassword`
 
-application can be tested with HTTP request:
+* and run `CREATE TABLE tapir_animal_row (id UUID NOT NULL, name VARCHAR(255), registered DATE, size VARCHAR(255), adoption_status VARCHAR(255), PRIMARY KEY(id) );`
 
-`curl --location --request POST 'localhost:8080/animal-shelter/animal' \
---header 'Content-Type: text/plain' \
---data-raw '{
-"name" : "Jazzy",
-"size": "small",
-"adoptionStatus": "in-quarantine"
-}'`
+### Documentation:
 
-documentation in Swagger is available on:
+When application is running documentation in Swagger is available on:
 
 `http://localhost:8080/docs/`
+
+### Stop postgresql container:
+
+Run: `./stop.sh`
