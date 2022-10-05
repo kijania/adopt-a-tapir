@@ -25,7 +25,7 @@ object TapirAnimalRequest {
 
   private val example = Example.of(
     TapirAnimalRequest(
-      "Native",
+      "Smelly Naomi",
       AnimalSize.Small,
       AdoptionStatus.InQuarantine
     )

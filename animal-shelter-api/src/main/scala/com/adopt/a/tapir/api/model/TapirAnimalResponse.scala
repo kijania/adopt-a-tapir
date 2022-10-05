@@ -29,7 +29,7 @@ object TapirAnimalResponse {
   private val example = Example.of(
     TapirAnimalResponse(
       UUID.randomUUID(),
-      "Native",
+      "Smelly Naomi",
       LocalDate.now(),
       AnimalSize.Small,
       AdoptionStatus.InQuarantine

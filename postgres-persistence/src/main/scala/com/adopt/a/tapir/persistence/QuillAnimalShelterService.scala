@@ -1,14 +1,15 @@
 package com.adopt.a.tapir.persistence
 
 import com.adopt.a.tapir.domain.AnimalShelterService
-import com.adopt.a.tapir.domain.model.TapirAnimal
+import com.adopt.a.tapir.domain.model.{Pagination, TapirAnimal}
 import com.adopt.a.tapir.persistence.QuillAnimalShelterService.dataSourceLayer
 import com.adopt.a.tapir.persistence.model.TapirAnimalRow
-import io.getquill.SnakeCase
+import io.getquill.{Ord, SnakeCase}
 import io.getquill.jdbczio.Quill
 import zio.{Task, TaskLayer, ZIO, ZLayer}
 
 case class QuillAnimalShelterService(quill: Quill.Postgres[SnakeCase]) extends AnimalShelterService {
+
   import quill._
 
   override def register(animal: TapirAnimal): Task[TapirAnimal] =
@@ -17,6 +18,10 @@ case class QuillAnimalShelterService(quill: Quill.Postgres[SnakeCase]) extends A
       .tap(animal => ZIO.logInfo(s"animal: $animal"))
       .flatMap(entity => insertOrUpdate(entity))
       .map(_.toDomain)
+
+  override def get(pagination: Pagination): Task[Seq[TapirAnimal]] =
+    retrieve(pagination)
+      .map(_.map(_.toDomain))
 
   private def insertOrUpdate(entity: TapirAnimalRow) = {
     run(
@@ -31,6 +36,15 @@ case class QuillAnimalShelterService(quill: Quill.Postgres[SnakeCase]) extends A
           )
           .returning[TapirAnimalRow](r => r)
       )
+    ).provide(dataSourceLayer)
+  }
+
+  private def retrieve(pagination: Pagination) = {
+    run(
+      query[TapirAnimalRow]
+        .sortBy(_.registered)(Ord.desc)
+        .drop(lift(pagination.offset))
+        .take(lift(pagination.perPage))
     ).provide(dataSourceLayer)
   }
 }

@@ -13,7 +13,7 @@
 
 * `psql -h localhost -p 25432 -U postgres -d postgres`
 
-* with password: `mysecretpassword`
+* with password: `password`
 
 * and run `CREATE TABLE tapir_animal_row (id UUID NOT NULL, name VARCHAR(255), registered DATE, size VARCHAR(255), adoption_status VARCHAR(255), PRIMARY KEY(id) );`
 
